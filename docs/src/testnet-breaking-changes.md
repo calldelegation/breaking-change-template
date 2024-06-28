@@ -1,3 +1,13 @@
+## Release [v1.0.3](https://github.com/calldelegation/breaking-change-template/releases/tag/v1.0.3)
+
+```Rust
+/* BEFORE */
+let hello = "world"
+
+/* AFTER */
+let hello = "world i am here"
+```
+
 ## Release [v1.0.2](https://github.com/calldelegation/breaking-change-template/releases/tag/v1.0.2)
 
 Testing some changes
