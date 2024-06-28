@@ -1,5 +1,19 @@
 # Sepolia Testnet Breaking Change Guide
 
+## June 28, 2024
+
+Release [v1.0.4](https://github.com/calldelegation/breaking-change-template/releases/tag/v1.0.4)
+
+```Rust
+/* BEFORE */
+let bad = "dog"
+
+/* AFTER */
+let bad = "doggy"
+```
+
+
+
 ## Release [v1.0.3](https://github.com/calldelegation/breaking-change-template/releases/tag/v1.0.3)
 
 ```Rust
