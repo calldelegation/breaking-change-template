@@ -1,0 +1,37 @@
+name: Update Breaking Changes
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  update-breaking-changes:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout breaking-change-log
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Update breaking changes
+      env:
+        MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}  # Use your new secret name here
+      run: npm run update-breaking-changes
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add docs/src/testnet-breaking-changes.md latest-version.txt
+        git commit -m 'Update breaking changes'
+        git push
+      env:
+        MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}  # Use your new secret name here

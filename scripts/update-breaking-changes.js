@@ -26,14 +26,19 @@ if (fs.existsSync(logFilePath)) {
 // Function to extract new changes from release data
 function extractNewChanges(logContent, releases) {
   let newEntries = '';
-  const logEntries = logContent.split('\n').filter(line => line.startsWith('## Release'));
+  const logEntries = logContent.split('\n').filter(line => line.startsWith('Release'));
   let latestVersion = startingVersion;
 
   releases.forEach(release => {
     const breakingChangesSection = extractBreakingChanges(release.body);
+    const releaseDate = new Date(release.published_at).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
 
-    if (breakingChangesSection && !logEntries.includes(`## Release [${release.tag_name}](${release.html_url})`)) {
-      newEntries = `## Release [${release.tag_name}](${release.html_url})\n\n${breakingChangesSection}\n\n` + newEntries;
+    if (breakingChangesSection && !logEntries.includes(`Release [${release.tag_name}](${release.html_url})`)) {
+      newEntries = `## ${releaseDate}\n\nRelease [${release.tag_name}](${release.html_url})\n\n${breakingChangesSection}\n\n` + newEntries;
       if (semver.gt(release.tag_name, latestVersion)) {
         latestVersion = release.tag_name;
       }
@@ -89,8 +94,11 @@ async function createPullRequest(newChanges, octokit, branchName) {
     path: 'docs/src/testnet-breaking-changes.md',
   });
 
-  const updatedContent = newChanges + Buffer.from(content, 'base64').toString('utf8');
-  const updatedContentBase64 = Buffer.from(updatedContent).toString('base64');
+  const updatedContent = Buffer.from(content, 'base64').toString('utf8');
+  const headerIndex = updatedContent.indexOf('# Sepolia Testnet Breaking Change Guide') + '# Sepolia Testnet Breaking Change Guide'.length;
+  const contentWithNewChanges = updatedContent.slice(0, headerIndex) + '\n\n' + newChanges + updatedContent.slice(headerIndex);
+
+  const updatedContentBase64 = Buffer.from(contentWithNewChanges).toString('base64');
 
   await octokit.repos.createOrUpdateFileContents({
     owner,
@@ -132,7 +140,7 @@ axios.get(apiUrl)
       console.log('Breaking changes updated.');
 
       // Create a pull request to append the changes
-      const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+      const octokit = new Octokit({ auth: process.env.MY_GITHUB_TOKEN });  // Use your new secret name here
       const branchName = `update-breaking-changes-${Date.now()}`;
       await createPullRequest(newChanges, octokit, branchName);
       console.log('Pull request created.');
