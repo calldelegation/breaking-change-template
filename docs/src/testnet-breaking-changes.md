@@ -1,6 +1,7 @@
 # Sepolia Testnet Breaking Change Guide
 
-## June 28, 2024
+## TS SDK
+### June 28, 2024
 
 Release [v1.0.4](https://github.com/calldelegation/breaking-change-template/releases/tag/v1.0.4)
 
@@ -12,9 +13,10 @@ let bad = "dog"
 let bad = "doggy"
 ```
 
+## TS SDK
+### June 28, 2024
 
-
-## Release [v1.0.3](https://github.com/calldelegation/breaking-change-template/releases/tag/v1.0.3)
+Release [v1.0.3](https://github.com/calldelegation/breaking-change-template/releases/tag/v1.0.3)
 
 ```Rust
 /* BEFORE */
@@ -24,7 +26,10 @@ let hello = "world"
 let hello = "world i am here"
 ```
 
-## Release [v1.0.2](https://github.com/calldelegation/breaking-change-template/releases/tag/v1.0.2)
+## TS SDK
+### June 28, 2024
+
+Release [v1.0.2](https://github.com/calldelegation/breaking-change-template/releases/tag/v1.0.2)
 
 Testing some changes
 
@@ -36,7 +41,10 @@ let function_selector = fn_selector!(my_contract_function(MyArgType));
 let function_selector = encode_fn_selector("my_contract_function");
 ```
 
-## Release [v1.0.1](https://github.com/calldelegation/breaking-change-template/releases/tag/v1.0.1)
+## TS SDK
+### June 28, 2024
+
+Release [v1.0.1](https://github.com/calldelegation/breaking-change-template/releases/tag/v1.0.1)
 
 The `std::call_frames::second_param` function now returns a `u64` instead of a generic type `T`.
 
