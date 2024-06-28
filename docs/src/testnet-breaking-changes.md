@@ -57,3 +57,13 @@ let base_asset_id = AssetId::base_asset_id();
 let base_asset_id = AssetId:base();
 ```
 
+## Release [v1.0.3](https://github.com/calldelegation/breaking-change-template/releases/tag/v1.0.3)
+
+```Rust
+/* BEFORE */
+let hello = "world"
+
+/* AFTER */
+let hello = "world i am here"
+```
+
